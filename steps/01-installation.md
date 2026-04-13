@@ -28,13 +28,7 @@ openssl version
 wireshark --version
 ```
 
-## Démarrage de Nginx
 
-```bash
-sudo systemctl enable nginx
-sudo systemctl start nginx
-sudo systemctl status nginx
-```
 
 ## Remarque
 

@@ -32,11 +32,14 @@ server {
 }
 ```
 
-Puis relancez Nginx :
+
+## Démarrage de Nginx
 
 ```bash
 sudo nginx -t
-sudo systemctl reload nginx
+sudo systemctl enable nginx
+sudo systemctl start nginx
+sudo systemctl status nginx
 ```
 
 ## Capturer l’échange HTTP avec Wireshark

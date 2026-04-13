@@ -23,6 +23,7 @@ sudo openssl req -x509 -nodes -days 365 \
   -out /etc/nginx/ssl/selfsigned.crt
 ```
 
+
 Lors de l’exécution, OpenSSL vous demandera :
 
 - Country Name (2 letter code)
@@ -33,7 +34,12 @@ Lors de l’exécution, OpenSSL vous demandera :
 - Common Name: localhost
 - Email Address
 
-Pour `Common Name`, indiquez `localhost` si vous testez en local.
+
+## Vérifier le contenu du certificat
+
+```bash
+openssl x509 -in /etc/nginx/ssl/selfsigned.crt -noout -text
+```
 
 ## Configurer Nginx pour HTTPS
 
