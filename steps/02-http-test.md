@@ -19,17 +19,43 @@ server {
     listen 80;
     server_name localhost;
 
-    root /var/www/html;
+    root /usr/share/nginx/html;
     index index.html;
 
     location / {
-        add_header Cache-Control "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0";
-        add_header Pragma "no-cache";
-        add_header Expires 0;
+        try_files $uri $uri/ =404;
+    }
 
-        try_files $uri $uri/ =200;
+    location /login {
+        return 200 "HTTP (NOT SECURE) - credentials sent in clear text";
     }
 }
+```
+
+## Créer la première page `index.html`
+
+Dans `sudo nano /usr/share/nginx/html/index.html`, collez ce contenu :
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login Demo</title>
+</head>
+<body>
+    <h2>Login Form</h2>
+
+    <form action="/login" method="POST">
+        <label>Username:</label>
+        <input type="text" name="username"><br><br>
+
+        <label>Password:</label>
+        <input type="password" name="password"><br><br>
+
+        <button type="submit">Login</button>
+    </form>
+</body>
+</html>
 ```
 
 

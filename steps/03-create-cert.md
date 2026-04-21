@@ -52,37 +52,41 @@ sudo nano /etc/nginx/sites-available/default
 Ajoutez ou remplacez avec ces blocs :
 
 ```nginx
+# HTTP
 server {
-    listen 80;
+    listen 80 default_server;
     server_name localhost;
 
-    root /var/www/html;
+    root /usr/share/nginx/html;
     index index.html;
 
     location / {
-        add_header Cache-Control "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0";
-        add_header Pragma "no-cache";
-        add_header Expires 0;
+        try_files $uri $uri/ =404;
+    }
 
-        try_files $uri $uri/ =200;
+    location /login {
+        return 200 "HTTP (NOT SECURE) - credentials sent in clear text";
     }
 }
 
+# HTTPS
 server {
     listen 443 ssl default_server;
-    listen [::]:443 ssl default_server;
-
     server_name localhost;
 
-    ssl_certificate /etc/nginx/ssl/selfsigned.crt;
+    ssl_certificate     /etc/nginx/ssl/selfsigned.crt;
     ssl_certificate_key /etc/nginx/ssl/selfsigned.key;
-    ssl_protocols TLSv1.2;
+    ssl_protocols       TLSv1.2;
 
-    root /var/www/html;
-    index index.html index.htm;
+    root /usr/share/nginx/html;
+    index index.html;
 
     location / {
         try_files $uri $uri/ =404;
+    }
+
+    location /login {
+        return 200 "HTTPS (SECURE) - data is encrypted with TLS";
     }
 }
 ```
